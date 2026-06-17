@@ -7,6 +7,10 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+
 
 @Entity
 public class Metric {
@@ -15,9 +19,17 @@ public class Metric {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message ="Device name is required")
     private String deviceName;
+
+    @Min(value = 0, message = "CPU usage must be a positive value")
+    @Max(value = 100, message = "CPU usage must be between 0 and 100")
     private double cpuUsage;
+    @Min(value = 0, message = "RAM usage must be a positive value")
+    @Max(value = 100, message = "RAM usage must be between 0 and 100")
     private double ramUsage;
+    @Min(value = 0, message = "Disk usage must be a positive value")
+    @Max(value = 100, message = "Disk usage must be between 0 and 100")
     private double diskUsage;
     private LocalDateTime timestamp;
 

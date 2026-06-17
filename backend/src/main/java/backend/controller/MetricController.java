@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import backend.model.Metric;
 import backend.repository.MetricRepository;
-
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -25,7 +25,7 @@ public class MetricController {
     }
 
     @PostMapping
-    public Metric createMetric(@RequestBody Metric metric){
+    public Metric createMetric(@Valid @RequestBody Metric metric){
         metric.setTimestamp(LocalDateTime.now());
         return metricRepository.save(metric);
     }
