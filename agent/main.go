@@ -11,8 +11,11 @@ import (
 	"github.com/shirou/gopsutil/v3/cpu"
 	"github.com/shirou/gopsutil/v3/disk"
 	"github.com/shirou/gopsutil/v3/mem"
+	"github.com/google/uuid"
 )
 type Metric struct {
+
+	AgentID string `json:"agentId"`
 
 	DeviceName string `json:"deviceName"`
 
@@ -48,6 +51,8 @@ func collectMetrics() Metric {
 
 
 	return Metric{
+
+		AgentID: getAgentID(),
 
 		DeviceName: hostname,
 
@@ -100,6 +105,32 @@ func sendMetrics(metric Metric){
 	fmt.Println("Metrics sent successfully" , metric)
 
 	
+}
+func getAgentID() string {
+
+
+	data, err := os.ReadFile("agent-id.txt")
+
+
+	if err == nil {
+
+		return string(data)
+
+	}
+
+
+	id := uuid.New().String()
+
+
+	os.WriteFile(
+		"agent-id.txt",
+		[]byte(id),
+		0644,
+	)
+
+
+	return id
+
 }
 
 func main() {

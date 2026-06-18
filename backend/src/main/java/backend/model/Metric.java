@@ -2,11 +2,13 @@ package backend.model;
 
 
 
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -18,6 +20,9 @@ public class Metric {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    private String agentId;
 
     @NotBlank(message ="Device name is required")
     private String deviceName;
@@ -37,6 +42,15 @@ public class Metric {
     public Long getId(){
         return id;
     }
+
+    public String getAgentId() {
+        return agentId;
+    }
+
+    public void setAgentId(String agentId){
+        this.agentId = agentId;
+    }
+
     public String getDeviceName() {
         return deviceName;
     }
