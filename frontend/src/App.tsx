@@ -1,93 +1,109 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 
 interface Metric {
 
-    id:number;
-    agentId:string;
-    deviceName:string;
-    cpuUsage:number;
-    ramUsage:number;
-    diskUsage:number;
-    
+    id: number;
+    agentId: string;
+    deviceName: string;
+    cpuUsage: number;
+    ramUsage: number;
+    diskUsage: number;
+
 
 }
 
 
 
-function App(){
+function App() {
 
 
-const [metrics,setMetrics] = useState<Metric[]>([]);
-
-
-
-useEffect(()=>{
-
-
-axios.get(
-"http://localhost:8080/api/metrics"
-)
-
-.then(response=>{
-
-setMetrics(response.data)
-
-})
-
-
-},[])
+    const [metrics, setMetrics] = useState<Metric[]>([]);
 
 
 
-return (
-
-<div>
-
-<h1>
-OpenMonitor Dashboard
-</h1>
+    useEffect(() => {
 
 
-{
-metrics.map(metric=>(
+        const fetchMetrics = () => {
 
-<div key={metric.id}>
+            axios.get(
+                "http://localhost:8080/api/metrics/latest"
+            )
 
-<h3>
-{metric.deviceName}
-</h3>
+                .then(response => {
 
+                    setMetrics(response.data)
 
-<p>
-CPU: {metric.cpuUsage.toFixed(2)}%
-</p>
+                })
 
-
-<p>
-RAM: {metric.ramUsage.toFixed(2)}%
-</p>
+        }
 
 
-<p>
-Disk: {metric.diskUsage.toFixed(2)}%
-</p>
+
+        fetchMetrics();
 
 
-<hr/>
-
-</div>
-
-
-))
-
-}
+        const interval = setInterval(
+            fetchMetrics,
+            5000
+        );
 
 
-</div>
+        return () => clearInterval(interval);
 
-)
+
+    }, [])
+
+
+    return (
+
+        <div>
+
+            <h1>
+                OpenMonitor Dashboard
+            </h1>
+
+
+            {
+                metrics.map(metric => (
+
+                    <div key={metric.id}>
+
+                        <h3>
+                            {metric.deviceName}
+                        </h3>
+
+
+                        <p>
+                            CPU: {metric.cpuUsage.toFixed(2)}%
+                        </p>
+
+
+                        <p>
+                            RAM: {metric.ramUsage.toFixed(2)}%
+                        </p>
+
+
+                        <p>
+                            Disk: {metric.diskUsage.toFixed(2)}%
+                        </p>
+
+
+                        <hr />
+
+                    </div>
+
+
+                ))
+
+            }
+
+
+        </div>
+
+    )
 
 }
 

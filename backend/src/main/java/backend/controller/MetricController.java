@@ -34,6 +34,11 @@ public class MetricController {
     public List<Metric> getMetrics(){
         return metricRepository.findAll();
     }
+
+    @GetMapping("/latest")
+    public List<Metric> getLatestMetrics(){
+        return metricRepository.findLatestMetrics();
+    }
    
     
 
