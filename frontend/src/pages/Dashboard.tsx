@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import DeviceCard from "../components/DeviceCard";
+import MetricsChart from "../components/MetricsChart";
 
 
 function Dashboard() {
@@ -83,8 +84,9 @@ justify-items-center
 
             </div>
 
-
+       <MetricsChart data={metrics}/>     
             </div>
+            
        
     );
 }
