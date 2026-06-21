@@ -21,4 +21,5 @@ WHERE m.timestamp =
 """)
 List<Metric> findLatestMetrics();
     
+List<Metric> findByAgentIdOrderByTimestampAsc(String agentId);
 }

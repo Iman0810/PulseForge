@@ -11,45 +11,99 @@ import {
 function MetricsChart({data}:any){
 
 
-    return (
+return (
 
-        <div className="mt-8">
-
-
-        <ResponsiveContainer width="100%" height={300}>
-
-        <LineChart data={data}>
+<div className="space-y-10 mt-10">
 
 
-        <XAxis dataKey="timestamp"/>
-
-        <YAxis/>
-
-
-        <Tooltip/>
-
-
-        <Line
-        type="monotone"
-        dataKey="cpuUsage"
-        />
+<Chart
+title="CPU Usage"
+data={data}
+metric="cpuUsage"
+/>
 
 
-        <Line
-        type="monotone"
-        dataKey="ramUsage"
-        />
+<Chart
+title="RAM Usage"
+data={data}
+metric="ramUsage"
+/>
 
 
-        </LineChart>
+<Chart
+title="Disk Usage"
+data={data}
+metric="diskUsage"
+/>
 
 
-        </ResponsiveContainer>
+</div>
+
+)
+
+}
 
 
-        </div>
 
-    )
+function Chart({title,data,metric}:any){
+
+
+return (
+
+<div>
+
+<h2 className="text-xl font-bold mb-4">
+
+{title}
+
+</h2>
+
+
+<ResponsiveContainer width="100%" height={250}>
+
+
+<LineChart data={data}>
+
+
+<XAxis
+
+dataKey="timestamp"
+
+tickFormatter={(value)=>{
+
+return new Date(value)
+.toLocaleTimeString();
+
+}}
+
+/>
+
+
+<YAxis/>
+
+
+<Tooltip/>
+
+
+<Line
+
+type="monotone"
+
+dataKey={metric}
+
+/>
+
+
+</LineChart>
+
+
+</ResponsiveContainer>
+
+
+</div>
+
+
+)
 
 }
 

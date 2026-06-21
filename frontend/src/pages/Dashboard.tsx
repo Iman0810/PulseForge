@@ -8,6 +8,7 @@ function Dashboard() {
 
 
     const [metrics, setMetrics] = useState([]);
+    const [history, setHistory] = useState([]);
 
 
 
@@ -24,6 +25,12 @@ function Dashboard() {
 
                 });
 
+            api.get("/metrics/history/1292045a-b8a5-4c22-8f93-8c6e90fe78a1")
+                .then(res => {
+
+                    setHistory(res.data)
+
+                });
 
         }
 
@@ -59,7 +66,7 @@ font-bold
 mb-12
 text-center
 ">
-                OpenMonitor Dashboard
+                Open Monitor Dashboard
             </h1>
 
             <div className="
@@ -84,10 +91,10 @@ justify-items-center
 
             </div>
 
-       <MetricsChart data={metrics}/>     
-            </div>
-            
-       
+            <MetricsChart data={history} />
+        </div>
+
+
     );
 }
 
