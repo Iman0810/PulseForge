@@ -24,6 +24,6 @@ public class MetricService {
         return metricRepository.findLatestMetrics();
     }
     public List<Metric> getHistory(String agentId){
-        return metricRepository.findByAgentIdOrderByTimestampAsc(agentId);
+        return metricRepository.findByAgent_AgentIdOrderByTimestampAsc(agentId);
     }
 }

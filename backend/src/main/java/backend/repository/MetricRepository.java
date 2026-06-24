@@ -10,16 +10,16 @@ import backend.model.Metric;
 public interface MetricRepository extends JpaRepository<Metric , Long> {
 
 @Query("""
-SELECT m
-FROM Metric m
+SELECT m FROM Metric m
 WHERE m.timestamp =
 (
-    SELECT MAX(m2.timestamp)
-    FROM Metric m2
-    WHERE m2.agentId = m.agentId
+ SELECT MAX(m2.timestamp)
+ FROM Metric m2
+ WHERE m2.agent = m.agent
 )
 """)
 List<Metric> findLatestMetrics();
-    
-List<Metric> findByAgentIdOrderByTimestampAsc(String agentId);
+
+List<Metric> findByAgent_AgentIdOrderByTimestampAsc(String agentId);
+
 }

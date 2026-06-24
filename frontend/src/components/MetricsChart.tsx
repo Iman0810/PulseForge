@@ -8,102 +8,102 @@ import {
 } from "recharts";
 
 
-function MetricsChart({data}:any){
+function MetricsChart({ data }: any) {
 
 
-return (
+    return (
 
-<div className="space-y-10 mt-10">
-
-
-<Chart
-title="CPU Usage"
-data={data}
-metric="cpuUsage"
-/>
+        <div className="space-y-10 mt-10">
 
 
-<Chart
-title="RAM Usage"
-data={data}
-metric="ramUsage"
-/>
+            <Chart
+                title="CPU Usage"
+                data={data}
+                metric="cpuUsage"
+            />
 
 
-<Chart
-title="Disk Usage"
-data={data}
-metric="diskUsage"
-/>
+            <Chart
+                title="RAM Usage"
+                data={data}
+                metric="ramUsage"
+            />
 
 
-</div>
+            <Chart
+                title="Disk Usage"
+                data={data}
+                metric="diskUsage"
+            />
 
-)
+
+        </div>
+
+    )
 
 }
 
 
 
-function Chart({title,data,metric}:any){
+function Chart({ title, data, metric }: any) {
 
 
-return (
+    return (
 
-<div>
+        <div>
 
-<h2 className="text-xl font-bold mb-4">
+            <h2 className="text-xl font-bold mb-4">
 
-{title}
+                {title}
 
-</h2>
-
-
-<ResponsiveContainer width="100%" height={250}>
+            </h2>
 
 
-<LineChart data={data}>
+            <ResponsiveContainer width="100%" height={250}>
 
 
-<XAxis
-
-dataKey="timestamp"
-
-tickFormatter={(value)=>{
-
-return new Date(value)
-.toLocaleTimeString();
-
-}}
-
-/>
+                <LineChart data={data}>
 
 
-<YAxis/>
+                    <XAxis
+
+                        dataKey="timestamp"
+
+                        tickFormatter={(value) => {
+
+                            return new Date(value)
+                                .toLocaleTimeString();
+
+                        }}
+
+                    />
 
 
-<Tooltip/>
+                    <YAxis />
 
 
-<Line
-
-type="monotone"
-
-dataKey={metric}
-
-/>
+                    <Tooltip />
 
 
-</LineChart>
+                    <Line
+
+                        type="monotone"
+
+                        dataKey={metric}
+
+                    />
 
 
-</ResponsiveContainer>
+                </LineChart>
 
 
-</div>
+            </ResponsiveContainer>
 
 
-)
+        </div>
+
+
+    )
 
 }
 
