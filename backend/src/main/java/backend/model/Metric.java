@@ -9,9 +9,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
+
 
 
 @Entity
@@ -21,8 +23,9 @@ public class Metric {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String agentId;
+    @ManyToOne
+    @JoinColumn(name = "agent_id", nullable = false)
+        private Agent agent;
 
     @NotBlank(message ="Device name is required")
     private String deviceName;
@@ -44,12 +47,14 @@ public class Metric {
         return id;
     }
 
-    public String getAgentId() {
-        return agentId;
+    public Agent getAgent() {
+        return agent;
     }
 
-    public void setAgentId(String agentId){
-        this.agentId = agentId;
+    public void setAgent(Agent agent) {
+        this.agent = agent;
+    }
+
     }
 
     public String getDeviceName() {

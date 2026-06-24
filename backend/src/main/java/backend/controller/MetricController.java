@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import backend.model.Metric;
-import backend.repository.MetricRepository;
+import backend.service.MetricService;
 import jakarta.validation.Valid;
 
 
@@ -19,10 +19,12 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/metrics")
 public class MetricController {
 
-    private final MetricRepository metricRepository;
+    
+    private final MetricService metricService;
 
-    public MetricController(MetricRepository metricRepository) {
-        this.metricRepository = metricRepository;
+    public MetricController(MetricService metricService) {
+        this.metricService = metricService;
+        
     }
 
     @PostMapping
@@ -31,24 +33,24 @@ public class MetricController {
         OffsetDateTime now = OffsetDateTime.now();
         metric.setTimestamp(now);
         metric.setLastSeen(now);
-        return metricRepository.save(metric);
+        return metricService.SaveMetric(metric);
     }
 
     @GetMapping
     public List<Metric> getMetrics(){
-        return metricRepository.findAll();
+        return metricService.getLatestMetrics();
     }
 
     @GetMapping("/latest")
     public List<Metric> getLatestMetrics(){
-        return metricRepository.findLatestMetrics();
+        return metricService.getLatestMetrics();
     }
 
     @GetMapping("/history/{agentId}")
     public List<Metric> getHistory(
         @PathVariable String agentId
     ){
-        return metricRepository.findByAgentIdOrderByTimestampAsc(agentId);
+        return metricService.getHistory(agentId);
     }
    
     
