@@ -24,7 +24,7 @@ function Dashboard() {
 
                 if (latest.data.length > 0) {
 
-                    const agentId = latest.data[0]?.agent?.agentId;
+                    const agentId = latest.data.map((metric:any)=>metric.agent.agentId);
 
                     if(!agentId){
                         console.log("missing agentID", latest.data[0]);

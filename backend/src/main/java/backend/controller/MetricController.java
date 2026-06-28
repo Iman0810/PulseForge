@@ -57,11 +57,12 @@ public Metric createMetric(@Valid @RequestBody Metric metric){
                 return agentRepository.save(newAgent);
 
             });
-
+    agent.setLastSeen(now);
 
     metric.setAgent(agent);
 
 
+    metric.setTimestamp(now);
     metric.setTimestamp(now);
     metric.setLastSeen(now);
 

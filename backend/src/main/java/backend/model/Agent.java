@@ -4,6 +4,8 @@ package backend.model;
 import java.time.OffsetDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,6 +38,7 @@ public class Agent {
 
 
     @OneToMany(mappedBy = "agent")
+    @JsonIgnore
     private List<Metric> metrics;
 
 
