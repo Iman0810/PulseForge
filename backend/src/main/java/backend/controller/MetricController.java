@@ -45,6 +45,18 @@ public Metric createMetric(
 
     OffsetDateTime now = OffsetDateTime.now();
 
+    if(metric.getAgent() == null ||
+   metric.getAgent().getAgentId() == null){
+
+    throw new RuntimeException(
+        "Agent information missing in request"
+    );
+
+}
+
+
+    String agentId = metric.getAgent().getAgentId();
+
     Agent agent = agentRepository
             .findByAgentId(
                 metric.getAgent().getAgentId()
