@@ -31,11 +31,16 @@ public class MetricController {
         
     }
 
- @PostMapping
+@PostMapping
 public Metric createMetric(@Valid @RequestBody Metric metric){
 
-
     OffsetDateTime now = OffsetDateTime.now();
+
+    if(metric.getAgent() == null ||
+       metric.getAgent().getAgentId() == null){
+
+        throw new RuntimeException("Agent information missing");
+    }
 
 
     Agent agent = agentRepository
@@ -54,15 +59,21 @@ public Metric createMetric(@Valid @RequestBody Metric metric){
 
                 newAgent.setStatus("ONLINE");
 
+                newAgent.setLastSeen(now);
+
                 return agentRepository.save(newAgent);
 
             });
+
+
+    agent.setStatus("ONLINE");
     agent.setLastSeen(now);
+
+    agentRepository.save(agent);
+
 
     metric.setAgent(agent);
 
-
-    metric.setTimestamp(now);
     metric.setTimestamp(now);
     metric.setLastSeen(now);
 

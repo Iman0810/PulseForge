@@ -15,7 +15,7 @@ WHERE m.timestamp =
 (
  SELECT MAX(m2.timestamp)
  FROM Metric m2
- WHERE m2.agent = m.agent
+ WHERE m2.agent.agentId = m.agent.agentId
 )
 """)
 List<Metric> findLatestMetrics();
