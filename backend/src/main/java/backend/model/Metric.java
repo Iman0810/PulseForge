@@ -2,6 +2,8 @@ package backend.model;
 
 import java.time.OffsetDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,6 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+
 @Entity
 public class Metric {
 
@@ -20,6 +23,7 @@ public class Metric {
 
     @ManyToOne
     @JoinColumn(name = "agent_id", referencedColumnName = "agentId", nullable = false)
+    @JsonIgnoreProperties("metrics")
     private Agent agent;
 
     @NotBlank(message = "Device name is required")

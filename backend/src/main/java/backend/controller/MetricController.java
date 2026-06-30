@@ -21,84 +21,110 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/metrics")
 public class MetricController {
 
-    
+
     private final AgentRepository agentRepository;
     private final MetricService metricService;
 
-    public MetricController(MetricService metricService, AgentRepository agentRepository) {
+
+    public MetricController(
+            MetricService metricService,
+            AgentRepository agentRepository
+    ) {
+
         this.metricService = metricService;
         this.agentRepository = agentRepository;
-        
-    }
 
-@PostMapping
-public Metric createMetric(@Valid @RequestBody Metric metric){
-
-    OffsetDateTime now = OffsetDateTime.now();
-
-    if(metric.getAgent() == null ||
-       metric.getAgent().getAgentId() == null){
-
-        throw new RuntimeException("Agent information missing");
     }
 
 
-    Agent agent = agentRepository
-            .findByAgentId(metric.getAgent().getAgentId())
-            .orElseGet(() -> {
 
-                Agent newAgent = new Agent();
+    @PostMapping
+    public Metric createMetric(
+            @Valid @RequestBody Metric metric
+    ){
 
-                newAgent.setAgentId(
+        OffsetDateTime now = OffsetDateTime.now();
+
+
+        if(metric.getAgent() == null ||
+           metric.getAgent().getAgentId() == null){
+
+            throw new RuntimeException(
+                "Agent information missing"
+            );
+
+        }
+
+
+
+        Agent agent = agentRepository
+                .findByAgentId(
                     metric.getAgent().getAgentId()
-                );
+                )
+                .orElseGet(() -> {
 
-                newAgent.setDeviceName(
-                    metric.getDeviceName()
-                );
+                    Agent newAgent = new Agent();
 
-                newAgent.setStatus("ONLINE");
+                    newAgent.setAgentId(
+                        metric.getAgent().getAgentId()
+                    );
 
-                newAgent.setLastSeen(now);
+                    newAgent.setDeviceName(
+                        metric.getDeviceName()
+                    );
 
-                return agentRepository.save(newAgent);
+                    newAgent.setStatus("ONLINE");
 
-            });
-
-
-    agent.setStatus("ONLINE");
-    agent.setLastSeen(now);
-
-    agentRepository.save(agent);
+                    newAgent.setLastSeen(now);
 
 
-    metric.setAgent(agent);
+                    return agentRepository.save(newAgent);
 
-    metric.setTimestamp(now);
-    metric.setLastSeen(now);
+                });
 
 
-    return metricService.SaveMetric(metric);
 
-}
+        agent.setStatus("ONLINE");
+        agent.setLastSeen(now);
 
-    @GetMapping
-    public List<Metric> getMetrics(){
-        return metricService.getLatestMetrics();
+        agentRepository.save(agent);
+
+
+
+        metric.setAgent(agent);
+
+        metric.setTimestamp(now);
+
+        metric.setLastSeen(now);
+
+
+
+        return metricService.SaveMetric(metric);
+
     }
+
+
+
 
     @GetMapping("/latest")
     public List<Metric> getLatestMetrics(){
+
         return metricService.getLatestMetrics();
+
     }
+
+
+
 
     @GetMapping("/history/{agentId}")
     public List<Metric> getHistory(
-        @PathVariable String agentId
+            @PathVariable String agentId
     ){
-        return metricService.getHistory(agentId);
+
+        return metricService
+                .getHistory(agentId);
+
     }
-   
-    
+
 
 }

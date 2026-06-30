@@ -24,10 +24,17 @@ function Dashboard() {
 
                 if (latest.data.length > 0) {
 
+
                     const agentId = latest.data[0]?.agent?.agentId;
-                    
-                    if(!agentId){
-                        console.log("missing agentID", latest.data[0]);
+
+
+                    if (!agentId) {
+
+                        console.log(
+                            "missing agentID",
+                            latest.data[0]
+                        );
+
                         return;
                     }
 
@@ -47,7 +54,6 @@ function Dashboard() {
                 console.log(error);
 
             }
-
 
         }
 
@@ -114,8 +120,8 @@ function Dashboard() {
 
         </div>
 
-
     );
+
 }
 
 
