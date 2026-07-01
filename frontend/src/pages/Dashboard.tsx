@@ -87,7 +87,7 @@ function Dashboard() {
             mb-12
             text-center
             ">
-               Pulse Dashboard
+               PulseForge ⚡ Dashboard
             </h1>
 
 

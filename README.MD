@@ -1,8 +1,8 @@
-# Pulse
+# PulseForge ⚡
 
 > 🚧 **Project Status:** Active Development
 
-pulse is a lightweight, self-hosted system monitoring platform currently being developed using **Go**, **Spring Boot**, **React**, and **PostgreSQL**.
+PulseForge is a lightweight, self-hosted system monitoring platform currently being developed using **Go**, **Spring Boot**, **React**, and **PostgreSQL**.
 
 The goal of the project is to provide a simple yet extensible monitoring solution capable of collecting real-time system metrics from multiple devices, storing historical performance data, and presenting it through a modern web dashboard.
 
@@ -60,7 +60,7 @@ The goal of the project is to provide a simple yet extensible monitoring solutio
 ## Project Structure
 
 ```
-Pulse/
+PulseForge/
 │
 ├── agent/         Go monitoring agent
 ├── backend/       Spring Boot REST API
@@ -146,7 +146,7 @@ go run .
 
 ## Notice
 
-Pulse is **currently under active development**.
+PulseForge is **currently under active development**.
 
 Features, APIs, database schema, and the user interface may change as development progresses. The project is not yet considered production-ready.
 
