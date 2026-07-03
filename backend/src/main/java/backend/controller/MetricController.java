@@ -3,6 +3,7 @@ package backend.controller;
 import java.time.OffsetDateTime;
 import java.util.List;
 
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,15 +25,18 @@ public class MetricController {
 
     private final AgentRepository agentRepository;
     private final MetricService metricService;
+    private final SimpMessagingTemplate messagingTemplate;
 
 
     public MetricController(
             MetricService metricService,
-            AgentRepository agentRepository
+            AgentRepository agentRepository,
+            SimpMessagingTemplate messagingTemplate
     ) {
 
         this.metricService = metricService;
         this.agentRepository = agentRepository;
+        this.messagingTemplate = messagingTemplate;
 
     }
 
@@ -99,7 +103,11 @@ public Metric createMetric(
 
 
 
-    return metricService.SaveMetric(metric);
+    Metric saved = metricService.SaveMetric(metric);
+
+messagingTemplate.convertAndSend("/topic/metrics", saved);
+
+return saved;
 
 }
 
