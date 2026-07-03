@@ -55,7 +55,7 @@ public Metric createMetric(
 }
 
 
-    String agentId = metric.getAgent().getAgentId();
+    // String agentId = metric.getAgent().getAgentId();
 
     Agent agent = agentRepository
             .findByAgentId(

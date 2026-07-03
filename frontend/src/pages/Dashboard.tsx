@@ -44,7 +44,7 @@ function Dashboard() {
                     );
 
 
-                    setHistory(historyData.data);
+                    setHistory(historyData.data.reverse());
 
                 }
 

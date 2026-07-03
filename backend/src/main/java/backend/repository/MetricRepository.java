@@ -2,6 +2,7 @@ package backend.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -20,6 +21,8 @@ WHERE m.timestamp =
 """)
 List<Metric> findLatestMetrics();
 
-List<Metric> findByAgent_AgentIdOrderByTimestampAsc(String agentId);
+List<Metric> findByAgent_AgentIdOrderByTimestampDesc(String agentId,
+    Pageable pageable);
+
 
 }
