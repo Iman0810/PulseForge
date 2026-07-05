@@ -11,11 +11,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import backend.config.MetricWebSocketHandler;
 import backend.model.Agent;
 import backend.model.Metric;
 import backend.repository.AgentRepository;
 import backend.service.MetricService;
 import jakarta.validation.Valid;
+
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @RestController
@@ -25,18 +29,23 @@ public class MetricController {
 
     private final AgentRepository agentRepository;
     private final MetricService metricService;
-    private final SimpMessagingTemplate messagingTemplate;
+    private final MetricWebSocketHandler webSocketHandler;
+    private final ObjectMapper objectMapper;
+    
+    
 
 
     public MetricController(
             MetricService metricService,
             AgentRepository agentRepository,
-            SimpMessagingTemplate messagingTemplate
+            MetricWebSocketHandler webSocketHandler,
+            ObjectMapper objectMapper
     ) {
 
         this.metricService = metricService;
         this.agentRepository = agentRepository;
-        this.messagingTemplate = messagingTemplate;
+        this.webSocketHandler = webSocketHandler;
+        this.objectMapper = objectMapper;
 
     }
 
@@ -105,10 +114,19 @@ public Metric createMetric(
 
     Metric saved = metricService.SaveMetric(metric);
 
-messagingTemplate.convertAndSend("/topic/metrics", saved);
+try {
+
+    String json = objectMapper.writeValueAsString(saved);
+
+    webSocketHandler.broadcast(json);
+
+} catch (Exception e) {
+
+    e.printStackTrace();
+
+}
 
 return saved;
-
 }
 
 
