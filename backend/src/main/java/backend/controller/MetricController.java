@@ -3,12 +3,16 @@ package backend.controller;
 import java.time.OffsetDateTime;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import backend.config.MetricWebSocketHandler;
 import backend.model.Agent;
@@ -17,7 +21,6 @@ import backend.repository.AgentRepository;
 import backend.service.MetricService;
 import jakarta.validation.Valid;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -25,6 +28,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RequestMapping("/api/metrics")
 public class MetricController {
 
+    private static final Logger log = LoggerFactory.getLogger(MetricController.class);
 
     private final AgentRepository agentRepository;
     private final MetricService metricService;
@@ -57,14 +61,12 @@ public Metric createMetric(
 
     OffsetDateTime now = OffsetDateTime.now();
 
-    if(metric.getAgent() == null ||
-   metric.getAgent().getAgentId() == null){
-
-    throw new RuntimeException(
-        "Agent information missing in request"
-    );
-
-}
+    if (metric.getAgent() == null || metric.getAgent().getAgentId() == null) {
+        throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "Agent information missing in request"
+        );
+    }
 
 
     // String agentId = metric.getAgent().getAgentId();
@@ -120,9 +122,7 @@ try {
     webSocketHandler.broadcast(json);
 
 } catch (Exception e) {
-
-    e.printStackTrace();
-
+    log.error("Failed to broadcast metric update", e);
 }
 
 return saved;
