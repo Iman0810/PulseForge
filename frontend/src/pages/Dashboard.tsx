@@ -1,26 +1,26 @@
 import { useEffect, useState } from "react";
+
 import { Client } from "@stomp/stompjs";
-import SockJS from "sockjs-client";
+import type { IMessage } from "@stomp/stompjs";
+
 
 function Dashboard() {
     const [metrics, setMetrics] = useState<any[]>([]);
 
     useEffect(() => {
-        const socket = new SockJS("http://localhost:8080/ws");
-
         const client = new Client({
-            webSocketFactory: () => socket,
+            brokerURL: "ws://localhost:8080/ws",
             reconnectDelay: 5000,
         });
 
         client.onConnect = () => {
-            client.subscribe("/topic/metrics", (message) => {
+            client.subscribe("/topic/metrics", (message: IMessage) => {
                 const newMetric = JSON.parse(message.body);
 
                 setMetrics((prev) => {
                     const updated = [newMetric, ...prev];
 
-                    if (updated.length > 20) {
+                            if (updated.length > 20) {
                         updated.pop();
                     }
 
