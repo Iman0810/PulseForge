@@ -1,39 +1,42 @@
 import { useEffect, useState } from "react";
 
-import { Client } from "@stomp/stompjs";
-import type { IMessage } from "@stomp/stompjs";
 
 
 function Dashboard() {
     const [metrics, setMetrics] = useState<any[]>([]);
 
     useEffect(() => {
-        const client = new Client({
-            brokerURL: "ws://localhost:8080/ws",
-            reconnectDelay: 5000,
-        });
 
-        client.onConnect = () => {
-            client.subscribe("/topic/metrics", (message: IMessage) => {
-                const newMetric = JSON.parse(message.body);
+        const socket = new WebSocket("ws://localhost:8080/ws");
 
-                setMetrics((prev) => {
-                    const updated = [newMetric, ...prev];
+        socket.onopen = () => {
+            console.log("Connected");
+        };
 
-                            if (updated.length > 20) {
-                        updated.pop();
-                    }
+        socket.onmessage = (event) => {
 
-                    return updated;
-                });
+            const metric = JSON.parse(event.data);
+
+            setMetrics(prev => {
+
+                const updated = [metric, ...prev];
+
+                return updated.slice(0, 10);
+
             });
+
         };
 
-        client.activate();
-
-        return () => {
-            client.deactivate();
+        socket.onerror = (error) => {
+            console.error(error);
         };
+
+        socket.onclose = () => {
+            console.log("Disconnected");
+        };
+
+        return () => socket.close();
+
     }, []);
 
     return (
