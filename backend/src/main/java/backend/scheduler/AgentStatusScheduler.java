@@ -44,7 +44,7 @@ public class AgentStatusScheduler {
                 }
             }
 
-            agentRepository.save(agent);
+            agentRepository.save(agent); 
         }
     }
 }
