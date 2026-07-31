@@ -52,8 +52,6 @@ public class MetricController {
 
     }
 
-
-
 @PostMapping
 public Metric createMetric(
         @Valid @RequestBody Metric metric
