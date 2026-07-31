@@ -44,7 +44,6 @@ function MetricsChart({ data }: any) {
 }
 
 
-
 function Chart({ title, data, metric }: any) {
 
 

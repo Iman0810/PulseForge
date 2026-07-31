@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
-
-
+import api from "../services/api";
+import DeviceCard from "../components/DeviceCard";
+import MetricsChart from "../components/MetricsChart";
 
 function Dashboard() {
     const [metrics, setMetrics] = useState<any[]>([]);
+
+    // key = agentId
+    // value = array of metrics for that agent
+    const [histories, setHistories] = useState<Record<string, any[]>>({});
 
     useEffect(() => {
 
@@ -40,22 +45,69 @@ function Dashboard() {
     }, []);
 
     return (
-        <div className="p-10 text-white bg-black min-h-screen">
-            <h1 className="text-4xl font-bold mb-10">
-                PulseForge ⚡ Live Dashboard
+
+        <div className="
+        min-h-screen
+        bg-black
+        text-white
+        p-10
+    ">
+
+            <h1 className="
+            text-5xl
+            font-bold
+            mb-12
+            text-center
+        ">
+                PulseForge ⚡ Dashboard
             </h1>
 
-            <div className="grid grid-cols-3 gap-6">
-                {metrics.map((m) => (
-                    <div key={m.id} className="p-4 bg-zinc-900 rounded">
-                        <h2>{m.deviceName}</h2>
-                        <p>CPU: {m.cpuUsage}</p>
-                        <p>RAM: {m.ramUsage}</p>
-                        <p>Disk: {m.diskUsage}</p>
-                    </div>
+            <div
+                className="
+                grid
+                grid-cols-1
+                md:grid-cols-3
+                gap-6
+                justify-items-center
+            "
+            >
+
+                {metrics.map(metric => (
+
+                    <DeviceCard
+
+                        key={metric.agent.agentId}
+
+                        metric={metric}
+
+                    />
+
                 ))}
+
             </div>
+
+            {
+
+                Object.entries(histories).map(
+
+                    ([agentId, history]) => (
+
+                        <MetricsChart
+
+                            key={agentId}
+
+                            data={history}
+
+                        />
+
+                    )
+
+                )
+
+            }
+
         </div>
+
     );
 }
 
