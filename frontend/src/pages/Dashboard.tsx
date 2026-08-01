@@ -8,7 +8,7 @@ function Dashboard() {
 
     // key = agentId
     // value = array of metrics for that agent
-    const [histories, setHistories] = useState<Record<string, any[]>>({});
+    const [history, setHistory] = useState<Record<string, any[]>>({});
 
     useEffect(() => {
 
@@ -21,6 +21,7 @@ function Dashboard() {
         socket.onmessage = (event) => {
 
             const metric = JSON.parse(event.data);
+
 
             setMetrics(prev => {
 
@@ -37,6 +38,14 @@ function Dashboard() {
 
                 return updated;
 
+            });
+
+            setHistory(prev =>{
+                const updated = [
+                    ...prev,
+                    metric
+                ];
+                return updated.slice(-20);
             });
 
         };
