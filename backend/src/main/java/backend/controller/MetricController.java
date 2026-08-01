@@ -133,11 +133,8 @@ return saved;
     public List<Metric> getLatestMetrics(){
 
         return metricService.getLatestMetrics();
-
+        
     }
-
-
-
 
     @GetMapping("/history/{agentId}")
     public List<Metric> getHistory(
@@ -148,6 +145,4 @@ return saved;
                 .getHistory(agentId);
 
     }
-
-
 }

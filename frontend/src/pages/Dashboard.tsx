@@ -24,9 +24,18 @@ function Dashboard() {
 
             setMetrics(prev => {
 
-                const updated = [metric, ...prev];
+                const index = prev.findIndex(
+                    m => m.agent.agentId === metric.agent.agentId
+                );
 
-                return updated.slice(0, 10);
+                if (index === -1){
+                    return [...prev, metric];
+                }
+
+                const updated = [...prev];
+                updated[index] = metric;
+
+                return updated;
 
             });
 
