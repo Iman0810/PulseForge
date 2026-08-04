@@ -2,7 +2,7 @@ interface ProgressBarProps {
     label: string;
     value: number;
 }
-
+// progress bar
 function ProgressBar({ label, value }: ProgressBarProps) {
 
     let color = "bg-green-500";

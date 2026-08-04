@@ -29,7 +29,7 @@ function Dashboard() {
 
         loadLatest();
 
-        // Connect WebSocket
+        // Connecting the  WebSocket
         const socket = new WebSocket("ws://localhost:8080/ws");
 
         socket.onopen = () => {
