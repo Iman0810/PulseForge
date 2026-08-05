@@ -43,6 +43,12 @@ public class Metric {
     @Max(value = 100, message = "Disk usage must be between 0 and 100")
     private double diskUsage;
 
+    private String os;
+
+    private String architecture;
+    private String kernel;
+    private Long uptime;
+
     private OffsetDateTime timestamp;
     private OffsetDateTime lastSeen;
 
@@ -105,4 +111,36 @@ public class Metric {
     public void setLastSeen(OffsetDateTime lastSeen) {
         this.lastSeen = lastSeen;
     }
+
+    public String getOs() {
+    return os;
+}
+
+public void setOs(String os) {
+    this.os = os;
+}
+
+public String getArchitecture() {
+    return architecture;
+}
+
+public void setArchitecture(String architecture) {
+    this.architecture = architecture;
+}
+
+public String getKernel() {
+    return kernel;
+}
+
+public void setKernel(String kernel) {
+    this.kernel = kernel;
+}
+
+public Long getUptime() {
+    return uptime;
+}
+
+public void setUptime(Long uptime) {
+    this.uptime = uptime;
+}
 }

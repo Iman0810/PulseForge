@@ -113,6 +113,7 @@ public Metric createMetric(
 
     Metric saved = metricService.SaveMetric(metric);
 
+
 try {
 
     String json = objectMapper.writeValueAsString(saved);

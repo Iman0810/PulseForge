@@ -7,11 +7,14 @@ import (
 	"net/http"
 	"os"
 	"time"
+	"runtime"
+
 
 	"github.com/shirou/gopsutil/v3/cpu"
 	"github.com/shirou/gopsutil/v3/disk"
 	"github.com/shirou/gopsutil/v3/mem"
 	"github.com/google/uuid"
+	"github.com/shirou/gopsutil/v3/host"
 )
 type Agent struct {
 	AgentID string `json:"agentId"`
@@ -29,12 +32,22 @@ type Metric struct {
 	DiskUsage float64 `json:"diskUsage"`
 
 	LastSeen string `json:"lastSeen"`
+
+	OS string `json:"os"`
+
+	Architecture string `json:"architecture"`
+
+    Kernel string `json:"kernel"`
+
+    Uptime uint64 `json:"uptime"`	
 }
 
 func collectMetrics() Metric {
 
 
 	hostname, err := os.Hostname()
+
+	hostInfo, _ := host.Info()
 
 	if err != nil {
 
@@ -68,6 +81,13 @@ func collectMetrics() Metric {
 		DiskUsage: diskInfo.UsedPercent,
 		
 		LastSeen: time.Now().Format(time.RFC3339),
+		OS: runtime.GOOS,
+
+		Architecture: runtime.GOARCH,
+
+		Kernel: hostInfo.KernelVersion,
+
+		Uptime: hostInfo.Uptime,
 	}
 
 }
