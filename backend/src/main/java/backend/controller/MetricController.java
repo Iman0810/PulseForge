@@ -112,7 +112,10 @@ public Metric createMetric(
 
 
     Metric saved = metricService.SaveMetric(metric);
-
+    System.out.println(saved.getOs());
+    System.out.println(saved.getArchitecture());
+    System.out.println(saved.getKernel());
+    System.out.println(saved.getUptime());
 
 try {
 
