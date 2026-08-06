@@ -1,5 +1,5 @@
 import ProgressBar from "./ProgressBar";
-import StatCard from "./StatCard";
+
 
 interface Metric {
     deviceName: string;

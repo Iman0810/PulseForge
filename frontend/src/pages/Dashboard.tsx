@@ -137,6 +137,11 @@ function Dashboard() {
         <div className="min-h-screen bg-black text-white p-10">
 
             <h1 className="text-5xl font-bold mb-12 text-center">
+                PulseForge ⚡ Dashboard
+
+                <br>
+                </br>
+
                 <div className="
     grid
     grid-cols-1
@@ -181,7 +186,6 @@ function Dashboard() {
 
                 </div>
 
-                PulseForge ⚡ Dashboard
 
             </h1>
 
