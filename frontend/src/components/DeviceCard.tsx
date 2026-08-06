@@ -1,4 +1,5 @@
 import ProgressBar from "./ProgressBar";
+import StatCard from "./StatCard";
 
 interface Metric {
     deviceName: string;
@@ -92,6 +93,8 @@ function getAlerts(metric: Metric): string[] {
 function DeviceCard({ metric }: { metric: Metric }) {
 
     const alerts = getAlerts(metric);
+
+    
 
     return (
 

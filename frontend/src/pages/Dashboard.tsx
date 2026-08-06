@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../services/api";
 import DeviceCard from "../components/DeviceCard";
 import MetricsChart from "../components/MetricsChart";
+import StatCard from "../components/StatCard";
 
 function Dashboard() {
 
@@ -92,11 +93,93 @@ function Dashboard() {
 
     }, []);
 
+    const onlineDevices = metrics.filter(
+        m => m.agent.status === "ONLINE"
+    ).length;
+
+    const avgCPU =
+        metrics.length === 0
+            ? 0
+            : metrics.reduce(
+                (sum, m) => sum + m.cpuUsage,
+                0
+            ) / metrics.length;
+
+    const avgRAM =
+        metrics.length === 0
+            ? 0
+            : metrics.reduce(
+                (sum, m) => sum + m.ramUsage,
+                0
+            ) / metrics.length;
+
+    const avgDisk =
+        metrics.length === 0
+            ? 0
+            : metrics.reduce(
+                (sum, m) => sum + m.diskUsage,
+                0
+            ) / metrics.length;
+
+    const activeAlerts = metrics.filter(
+
+        m =>
+
+            m.cpuUsage >= 90 ||
+
+            m.ramUsage >= 90 ||
+
+            m.diskUsage >= 95
+
+    ).length;
     return (
 
         <div className="min-h-screen bg-black text-white p-10">
 
             <h1 className="text-5xl font-bold mb-12 text-center">
+                <div className="
+    grid
+    grid-cols-1
+    md:grid-cols-5
+    gap-6
+    mb-10
+">
+
+                    <StatCard
+                        title="Online"
+                        value={onlineDevices}
+                        color="text-green-400"
+                    />
+
+                    <StatCard
+                        title="Avg CPU"
+                        value={`${avgCPU.toFixed(1)}%`}
+                        color="text-cyan-400"
+                    />
+
+                    <StatCard
+                        title="Avg RAM"
+                        value={`${avgRAM.toFixed(1)}%`}
+                        color="text-yellow-400"
+                    />
+
+                    <StatCard
+                        title="Avg Disk"
+                        value={`${avgDisk.toFixed(1)}%`}
+                        color="text-purple-400"
+                    />
+
+                    <StatCard
+                        title="Alerts"
+                        value={activeAlerts}
+                        color={
+                            activeAlerts > 0
+                                ? "text-red-400"
+                                : "text-green-400"
+                        }
+                    />
+
+                </div>
 
                 PulseForge ⚡ Dashboard
 
