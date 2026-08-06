@@ -42,6 +42,8 @@ function Dashboard() {
 
             const metric = JSON.parse(event.data);
 
+            console.log("Received metric:", metric);
+
             // Update existing card
             setMetrics(prev => {
 
