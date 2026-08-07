@@ -28,8 +28,12 @@ public class AgentStatusScheduler {
 
         for (Agent agent : agents) {
 
+            String newStatus;
+
             if (agent.getLastSeen() == null) {
-                agent.setStatus("OFFLINE");
+
+                newStatus = "OFFLINE";
+
             } else {
 
                 long seconds = ChronoUnit.SECONDS.between(
@@ -37,14 +41,25 @@ public class AgentStatusScheduler {
                         now
                 );
 
-                if (seconds > 30) {
-                    agent.setStatus("OFFLINE");
-                } else {
-                    agent.setStatus("ONLINE");
-                }
+                newStatus = seconds > 30
+                        ? "OFFLINE"
+                        : "ONLINE";
             }
 
-            agentRepository.save(agent); 
+            // Only save if the status actually changed
+            if (!newStatus.equals(agent.getStatus())) {
+
+                agent.setStatus(newStatus);
+
+                agentRepository.save(agent);
+
+                System.out.println(
+                        "Agent " +
+                        agent.getAgentId() +
+                        " changed to " +
+                        newStatus
+                );
+            }
         }
     }
 }
