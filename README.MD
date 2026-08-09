@@ -100,8 +100,8 @@ React Dashboard
 
 ### In Progress
 
-- [ ] Multi-device monitoring improvements
-- [ ] Automatic offline detection
+- [x] Multi-device monitoring improvements
+- [x] Automatic offline detection
 - [ ] Dashboard refinements
 
 ### Planned
