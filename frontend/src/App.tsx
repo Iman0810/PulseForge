@@ -1,14 +1,31 @@
-import Dashboard from "./pages/Dashboard";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import Dashboard from "./pages/Dashboard";
+import DeviceDetails from "./pages/DeviceDetails";
 
 function App() {
 
-
     return (
 
-        <Dashboard />
+        <BrowserRouter>
 
-    )
+            <Routes>
+
+                <Route
+                    path="/"
+                    element={<Dashboard />}
+                />
+
+                <Route
+                    path="/device/:agentId"
+                    element={<DeviceDetails />}
+                />
+
+            </Routes>
+
+        </BrowserRouter>
+
+    );
 
 }
 
