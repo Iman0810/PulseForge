@@ -1,5 +1,5 @@
 import ProgressBar from "./ProgressBar";
-
+import { useNavigate } from "react-router-dom";
 
 interface Metric {
     deviceName: string;
@@ -94,24 +94,32 @@ function DeviceCard({ metric }: { metric: Metric }) {
 
     const alerts = getAlerts(metric);
 
-    
+    const navigate = useNavigate();
 
     return (
 
-        <div className="
-            bg-zinc-900
-            border
-            border-zinc-700
-            rounded-xl
-            p-6
-            w-80
-            shadow-lg
-            hover:shadow-2xl
-            transition-all
-            duration-300
-        ">
+        <div
+            onClick={() =>
+                navigate(`/device/${metric.agent.agentId}`)
+            }
 
-            <div className="flex justify-between items-center mb-6">
+            className="
+        bg-zinc-900
+        border
+        border-zinc-700
+        rounded-xl
+        p-6
+        w-80
+        shadow-lg
+        hover:shadow-2xl
+        hover:border-cyan-500
+        transition-all
+        duration-300
+        cursor-pointer
+    "
+        >
+
+        < div className = "flex justify-between items-center mb-6" >
 
                 <h2 className="text-xl font-bold">
                     🖥️ {metric.deviceName}
@@ -127,7 +135,7 @@ function DeviceCard({ metric }: { metric: Metric }) {
                     {metric.agent.status}
                 </span>
 
-            </div>
+            </div >
 
             <div className="text-sm text-zinc-400 mb-5 space-y-1">
 
@@ -172,36 +180,36 @@ function DeviceCard({ metric }: { metric: Metric }) {
 
             </div>
 
-            {
-                alerts.length > 0 && (
+    {
+        alerts.length > 0 && (
 
-                    <div className="mt-5 pt-4 border-t border-red-600">
+            <div className="mt-5 pt-4 border-t border-red-600">
 
-                        <h3 className="text-red-400 font-semibold mb-2">
+                <h3 className="text-red-400 font-semibold mb-2">
 
-                            Alerts
+                    Alerts
 
-                        </h3>
+                </h3>
 
-                        {
-                            alerts.map((alert, index) => (
+                {
+                    alerts.map((alert, index) => (
 
-                                <p
-                                    key={index}
-                                    className="text-sm text-red-300"
-                                >
-                                    {alert}
-                                </p>
+                        <p
+                            key={index}
+                            className="text-sm text-red-300"
+                        >
+                            {alert}
+                        </p>
 
-                            ))
-                        }
+                    ))
+                }
 
-                    </div>
+            </div>
 
-                )
-            }
+        )
+    }
 
-        </div>
+        </div >
 
     );
 }
