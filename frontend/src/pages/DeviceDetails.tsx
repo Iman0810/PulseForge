@@ -68,8 +68,6 @@ function DeviceDetails() {
             return;
         }
 
-        let socket: WebSocket | null = null;
-
 
         // -----------------------------------------
         // Load existing history
@@ -111,10 +109,10 @@ function DeviceDetails() {
 
 
         // -----------------------------------------
-        // Connect to WebSocket
+        // WebSocket
         // -----------------------------------------
 
-        socket = new WebSocket(
+        const socket = new WebSocket(
             "ws://localhost:8080/ws"
         );
 
@@ -142,8 +140,8 @@ function DeviceDetails() {
                 );
 
 
-                // Ignore metrics belonging to
-                // other devices
+                // Only accept metrics belonging
+                // to this device
 
                 if (
                     metric.agent.agentId !== agentId
@@ -152,7 +150,8 @@ function DeviceDetails() {
                 }
 
 
-                // Add new metric to history
+                // Add newest metric to beginning
+                // of history
 
                 setHistory(prev => {
 
@@ -161,7 +160,8 @@ function DeviceDetails() {
                         ...prev
                     ];
 
-                    // Keep the latest 20 points
+
+                    // Keep only latest 20 points
 
                     return updated.slice(0, 20);
 
@@ -204,7 +204,7 @@ function DeviceDetails() {
 
         return () => {
 
-            socket?.close();
+            socket.close();
 
         };
 
@@ -278,11 +278,19 @@ function DeviceDetails() {
     }
 
 
-
-    const chartData = [...history].reverse();
-
+    // -----------------------------------------
+    // Latest metric
+    // -----------------------------------------
 
     const latest = history[0];
+
+
+    // Backend returns newest first.
+    // Charts need oldest first.
+
+    const chartData = [
+        ...history
+    ].reverse();
 
 
     return (
