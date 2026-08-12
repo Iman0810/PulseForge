@@ -103,7 +103,7 @@ function DeviceCard({ metric }: { metric: Metric }) {
                 navigate(`/device/${metric.agent.agentId}`)
             }
 
-            className="
+    className="
         bg-zinc-900
         border
         border-zinc-700
@@ -112,7 +112,8 @@ function DeviceCard({ metric }: { metric: Metric }) {
         w-80
         shadow-lg
         hover:shadow-2xl
-        hover:border-cyan-500
+        hover:border-zinc-500
+        hover:-translate-y-1
         transition-all
         duration-300
         cursor-pointer
