@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import api from "../services/api";
 import ProgressBar from "../components/ProgressBar";
@@ -54,6 +54,8 @@ function formatUptime(seconds: number): string {
 function DeviceDetails() {
 
     const { agentId } = useParams();
+
+    const navigate = useNavigate();
 
     const [history, setHistory] = useState<Metric[]>([]);
 
@@ -263,6 +265,24 @@ function DeviceDetails() {
 
             <div className="min-h-screen bg-black text-white p-10">
 
+                <button
+                    onClick={() => navigate("/")}
+                    className="
+                        mb-6
+                        px-4
+                        py-2
+                        bg-zinc-800
+                        hover:bg-zinc-700
+                        rounded-lg
+                        text-sm
+                        font-medium
+                        transition
+                    "
+                >
+                    ← Back to Dashboard
+                </button>
+
+
                 <h1 className="text-4xl font-bold">
                     Device Details
                 </h1>
@@ -296,6 +316,32 @@ function DeviceDetails() {
     return (
 
         <div className="min-h-screen bg-black text-white p-10">
+
+
+            {/* -------------------------------- */}
+            {/* Back Button */}
+            {/* -------------------------------- */}
+
+            <button
+                onClick={() => navigate("/")}
+                className="
+                    mb-6
+                    px-4
+                    py-2
+                    bg-zinc-800
+                    hover:bg-zinc-700
+                    border
+                    border-zinc-700
+                    hover:border-zinc-500
+                    rounded-lg
+                    text-sm
+                    font-medium
+                    transition-all
+                    duration-200
+                "
+            >
+                ← Back to Dashboard
+            </button>
 
 
             {/* -------------------------------- */}
