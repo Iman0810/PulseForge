@@ -1,17 +1,16 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+
+import Navbar from "./components/Navbar";
 
 import Dashboard from "./pages/Dashboard";
 import DeviceDetails from "./pages/DeviceDetails";
-
-import Navbar from "./components/Navbar";
 
 function App() {
 
     return (
 
-        <BrowserRouter>
-
-        <Navbar/>
+        <>
+            <Navbar />
 
             <Routes>
 
@@ -27,7 +26,7 @@ function App() {
 
             </Routes>
 
-        </BrowserRouter>
+        </>
 
     );
 
