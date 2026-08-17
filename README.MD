@@ -102,11 +102,11 @@ React Dashboard
 
 - [x] Multi-device monitoring improvements
 - [x] Automatic offline detection
-- [ ] Dashboard refinements
+- [x] Dashboard refinements
 
 ### Planned
 
-- [ ] JWT authentication
+- [x] JWT authentication
 - [ ] Role-based access
 - [ ] WebSocket real-time updates
 - [ ] Alert and notification system
