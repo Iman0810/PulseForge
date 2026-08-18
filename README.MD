@@ -97,16 +97,17 @@ React Dashboard
 - [x] Historical metrics
 - [x] Live dashboard
 - [x] Historical charts
-
-### In Progress
-
 - [x] Multi-device monitoring improvements
 - [x] Automatic offline detection
 - [x] Dashboard refinements
 
-### Planned
+### In Progress
 
 - [x] JWT authentication
+
+
+### Planned
+
 - [ ] Role-based access
 - [ ] WebSocket real-time updates
 - [ ] Alert and notification system
