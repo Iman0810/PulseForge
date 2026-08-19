@@ -94,7 +94,7 @@ public ResponseEntity<?> register(
     );
 
     user.setRole("USER");
-
+    
     userRepository.save(user);
 
     return ResponseEntity.ok(
