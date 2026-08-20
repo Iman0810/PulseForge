@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
 import DeviceDetails from "./pages/DeviceDetails";
 import Login from "./pages/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
 
@@ -18,6 +19,8 @@ function App() {
                     path="/login"
                     element={<Login />}
                 />
+
+                <Route element = {<ProtectedRoute />}>
 
                 <Route
                     path="/"
