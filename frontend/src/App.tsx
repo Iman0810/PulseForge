@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 
 import Dashboard from "./pages/Dashboard";
 import DeviceDetails from "./pages/DeviceDetails";
+import Login from "./pages/Login";
 
 function App() {
 
@@ -13,6 +14,10 @@ function App() {
             <Navbar />
 
             <Routes>
+                <Route
+                    path="/login"
+                    element={<Login />}
+                />
 
                 <Route
                     path="/"
