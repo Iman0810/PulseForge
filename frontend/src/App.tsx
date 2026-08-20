@@ -32,6 +32,8 @@ function App() {
                     element={<DeviceDetails />}
                 />
 
+                </Route>
+
             </Routes>
 
         </>
