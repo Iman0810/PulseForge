@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 
@@ -7,36 +7,57 @@ import DeviceDetails from "./pages/DeviceDetails";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-function App() {
+
+function ProtectedLayout() {
 
     return (
 
         <>
             <Navbar />
 
-            <Routes>
-                <Route
-                    path="/login"
-                    element={<Login />}
-                />
+            <Outlet />
+        </>
 
-                <Route element = {<ProtectedRoute />}>
+    );
 
-                <Route
-                    path="/"
-                    element={<Dashboard />}
-                />
+}
 
-                <Route
-                    path="/device/:agentId"
-                    element={<DeviceDetails />}
-                />
+
+function App() {
+
+    return (
+
+        <Routes>
+
+            {/* Public route */}
+
+            <Route
+                path="/login"
+                element={<Login />}
+            />
+
+
+            {/* Protected routes */}
+
+            <Route element={<ProtectedRoute />}>
+
+                <Route element={<ProtectedLayout />}>
+
+                    <Route
+                        path="/"
+                        element={<Dashboard />}
+                    />
+
+                    <Route
+                        path="/device/:agentId"
+                        element={<DeviceDetails />}
+                    />
 
                 </Route>
 
-            </Routes>
+            </Route>
 
-        </>
+        </Routes>
 
     );
 
