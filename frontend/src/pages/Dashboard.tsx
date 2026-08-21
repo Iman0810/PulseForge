@@ -3,11 +3,13 @@ import api from "../services/api";
 import DeviceCard from "../components/DeviceCard";
 import MetricsChart from "../components/MetricsChart";
 import StatCard from "../components/StatCard";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
 
     const [metrics, setMetrics] = useState<any[]>([]);
     const [history, setHistory] = useState<any[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -31,7 +33,16 @@ function Dashboard() {
         loadLatest();
 
         // Connecting the  WebSocket
-        const socket = new WebSocket("ws://localhost:8080/ws");
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            navigate("/login");
+            return;
+        }
+
+        const socket = new WebSocket(
+            `ws://localhost:8080/ws?token=${encodeURIComponent(token)}`
+        );
 
         socket.onopen = () => {
 
@@ -144,9 +155,9 @@ function Dashboard() {
                 PulseForge ⚡ Dashboard
             </h1>
 
-           
 
-                <div className="
+
+            <div className="
     grid
     grid-cols-1
     sm:grid-cols-2
@@ -155,44 +166,44 @@ function Dashboard() {
     mb-10
 ">
 
-                    <StatCard
-                        title="Online"
-                        value={onlineDevices}
-                        color="text-green-400"
-                    />
+                <StatCard
+                    title="Online"
+                    value={onlineDevices}
+                    color="text-green-400"
+                />
 
-                    <StatCard
-                        title="Avg CPU"
-                        value={`${avgCPU.toFixed(1)}%`}
-                        color="text-cyan-400"
-                    />
+                <StatCard
+                    title="Avg CPU"
+                    value={`${avgCPU.toFixed(1)}%`}
+                    color="text-cyan-400"
+                />
 
-                    <StatCard
-                        title="Avg RAM"
-                        value={`${avgRAM.toFixed(1)}%`}
-                        color="text-yellow-400"
-                    />
+                <StatCard
+                    title="Avg RAM"
+                    value={`${avgRAM.toFixed(1)}%`}
+                    color="text-yellow-400"
+                />
 
-                    <StatCard
-                        title="Avg Disk"
-                        value={`${avgDisk.toFixed(1)}%`}
-                        color="text-purple-400"
-                    />
+                <StatCard
+                    title="Avg Disk"
+                    value={`${avgDisk.toFixed(1)}%`}
+                    color="text-purple-400"
+                />
 
-                    <StatCard
-                        title="Alerts"
-                        value={activeAlerts}
-                        color={
-                            activeAlerts > 0
-                                ? "text-red-400"
-                                : "text-green-400"
-                        }
-                    />
+                <StatCard
+                    title="Alerts"
+                    value={activeAlerts}
+                    color={
+                        activeAlerts > 0
+                            ? "text-red-400"
+                            : "text-green-400"
+                    }
+                />
 
-                </div>
+            </div>
 
 
-        
+
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
 

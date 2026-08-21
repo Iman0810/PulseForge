@@ -62,6 +62,7 @@ function DeviceDetails() {
     const [loading, setLoading] = useState(true);
 
     const [error, setError] = useState<string | null>(null);
+    
 
 
     useEffect(() => {
@@ -114,8 +115,15 @@ function DeviceDetails() {
         // WebSocket
         // -----------------------------------------
 
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            navigate("/login");
+            return;
+        }
+
         const socket = new WebSocket(
-            "ws://localhost:8080/ws"
+            `ws://localhost:8080/ws?token=${encodeURIComponent(token)}`
         );
 
 
