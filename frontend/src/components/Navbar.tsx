@@ -1,57 +1,66 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
+
+    const navigate = useNavigate();
+
+    const token = localStorage.getItem("token");
+
+
+    const handleLogout = () => {
+
+        localStorage.removeItem("token");
+
+        navigate("/login");
+
+    };
+
 
     return (
 
         <nav className="
-            bg-zinc-950
+            bg-zinc-900
             border-b
-            border-zinc-800
-            px-8
+            border-zinc-700
+            px-6
             py-4
             flex
-            items-center
             justify-between
+            items-center
         ">
-
-            {/* Logo */}
 
             <Link
                 to="/"
-                className="
-                    text-xl
-                    font-bold
-                    text-white
-                    hover:text-cyan-400
-                    transition
-                "
+                className="text-xl font-bold"
             >
                 PulseForge ⚡
             </Link>
 
 
-            {/* Navigation */}
+            {token && (
 
-            <div className="flex items-center gap-6">
-
-                <Link
-                    to="/"
+                <button
+                    onClick={handleLogout}
                     className="
-                        text-zinc-300
-                        hover:text-white
+                        bg-red-500/20
+                        text-red-400
+                        border
+                        border-red-500/30
+                        px-4
+                        py-2
+                        rounded-lg
+                        hover:bg-red-500/30
                         transition
                     "
                 >
-                    Dashboard
-                </Link>
+                    Logout
+                </button>
 
-            </div>
+            )}
 
         </nav>
 
     );
-
 }
 
 export default Navbar;

@@ -1,58 +1,89 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import api from "../services/api";
-import {Link} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-function Login() {
+import api from "../services/api";
+
+function Register() {
 
     const navigate = useNavigate();
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
     const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
 
     const [loading, setLoading] = useState(false);
 
 
-    const handleLogin = async (
+    const handleRegister = async (
         event: React.FormEvent
     ) => {
 
         event.preventDefault();
 
         setError("");
+        setSuccess("");
+
+
+        if (password !== confirmPassword) {
+
+            setError("Passwords do not match");
+
+            return;
+        }
+
+
         setLoading(true);
+
 
         try {
 
-            const response = await api.post(
-                "/auth/login",
+            await api.post(
+                "/auth/register",
                 {
                     username,
                     password
                 }
             );
 
-            const token = response.data.token;
 
-            localStorage.setItem(
-                "token",
-                token
+            setSuccess(
+                "Registration successful! Redirecting to login..."
             );
 
-            navigate("/");
 
-        } catch (err) {
+            setTimeout(() => {
+
+                navigate("/login");
+
+            }, 1500);
+
+
+        } catch (err: any) {
 
             console.error(
-                "Login failed:",
+                "Registration failed:",
                 err
             );
 
-            setError(
-                "Invalid username or password"
-            );
+
+            if (err.response?.data) {
+
+                setError(
+                    typeof err.response.data === "string"
+                        ? err.response.data
+                        : "Registration failed"
+                );
+
+            } else {
+
+                setError(
+                    "Registration failed. Please try again."
+                );
+
+            }
 
         } finally {
 
@@ -86,6 +117,7 @@ function Login() {
                 shadow-2xl
             ">
 
+
                 <div className="text-center mb-8">
 
                     <h1 className="
@@ -99,16 +131,17 @@ function Login() {
                         text-zinc-400
                         mt-2
                     ">
-                        Sign in to your dashboard
+                        Create your account
                     </p>
 
                 </div>
 
 
                 <form
-                    onSubmit={handleLogin}
+                    onSubmit={handleRegister}
                     className="space-y-5"
                 >
+
 
                     <div>
 
@@ -129,6 +162,7 @@ function Login() {
                                     event.target.value
                                 )
                             }
+                            required
                             className="
                                 w-full
                                 bg-black
@@ -141,7 +175,7 @@ function Login() {
                                 outline-none
                                 focus:border-cyan-400
                             "
-                            placeholder="Enter username"
+                            placeholder="Choose a username"
                         />
 
                     </div>
@@ -166,6 +200,7 @@ function Login() {
                                     event.target.value
                                 )
                             }
+                            required
                             className="
                                 w-full
                                 bg-black
@@ -178,7 +213,45 @@ function Login() {
                                 outline-none
                                 focus:border-cyan-400
                             "
-                            placeholder="Enter password"
+                            placeholder="At least 6 characters"
+                        />
+
+                    </div>
+
+
+                    <div>
+
+                        <label className="
+                            block
+                            text-sm
+                            text-zinc-400
+                            mb-2
+                        ">
+                            Confirm Password
+                        </label>
+
+                        <input
+                            type="password"
+                            value={confirmPassword}
+                            onChange={(event) =>
+                                setConfirmPassword(
+                                    event.target.value
+                                )
+                            }
+                            required
+                            className="
+                                w-full
+                                bg-black
+                                border
+                                border-zinc-700
+                                rounded-lg
+                                px-4
+                                py-3
+                                text-white
+                                outline-none
+                                focus:border-cyan-400
+                            "
+                            placeholder="Repeat your password"
                         />
 
                     </div>
@@ -191,6 +264,18 @@ function Login() {
                             text-sm
                         ">
                             {error}
+                        </p>
+
+                    )}
+
+
+                    {success && (
+
+                        <p className="
+                            text-green-400
+                            text-sm
+                        ">
+                            {success}
                         </p>
 
                     )}
@@ -213,34 +298,37 @@ function Login() {
                     >
 
                         {loading
-                            ? "Signing in..."
-                            : "Sign In"
+                            ? "Creating account..."
+                            : "Create Account"
                         }
 
                     </button>
 
-                    <div className="
-    text-center
-    mt-6
-    text-sm
-    text-zinc-400
-">
-
-                        Don't have an account?{" "}
-
-                        <Link
-                            to="/register"
-                            className="
-            text-cyan-400
-            hover:text-cyan-300
-        "
-                        >
-                            Create one
-                        </Link>
-
-                    </div>
 
                 </form>
+
+
+                <div className="
+                    text-center
+                    mt-6
+                    text-sm
+                    text-zinc-400
+                ">
+
+                    Already have an account?{" "}
+
+                    <Link
+                        to="/login"
+                        className="
+                            text-cyan-400
+                            hover:text-cyan-300
+                        "
+                    >
+                        Sign in
+                    </Link>
+
+                </div>
+
 
             </div>
 
@@ -249,4 +337,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default Register;

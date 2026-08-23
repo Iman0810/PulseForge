@@ -6,7 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import DeviceDetails from "./pages/DeviceDetails";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
-
+import Register from "./pages/Register";
 
 function ProtectedLayout() {
 
@@ -34,6 +34,10 @@ function App() {
             <Route
                 path="/login"
                 element={<Login />}
+            />
+            <Route
+                path="/register"
+                element={<Register />}
             />
 
 
