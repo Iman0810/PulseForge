@@ -27,6 +27,7 @@ function Navbar() {
             flex
             justify-between
             items-center
+            text-zinc-300
         ">
 
             <Link
