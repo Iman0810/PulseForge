@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +14,22 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtService {
 
-    private final SecretKey secretKey =
-            Keys.hmacShaKeyFor(
-                    "PulseForgeSuperSecretKeyForJWTAuthentication2026"
-                            .getBytes()
-            );
+    private final SecretKey secretKey;
+    private final long expiration;
+
+    public JwtService(
+            @Value("${jwt.secret}") String secret,
+            @Value("${jwt.expiration}") long expiration
+    ) {
+
+        this.secretKey =
+                Keys.hmacShaKeyFor(
+                        secret.getBytes()
+                );
+
+        this.expiration = expiration;
+    }
+
 
     public String generateToken(String username) {
 
@@ -27,12 +39,13 @@ public class JwtService {
                 .expiration(
                         new Date(
                                 System.currentTimeMillis()
-                                        + 1000L * 60 * 60 * 24
+                                        + expiration
                         )
                 )
                 .signWith(secretKey)
                 .compact();
     }
+
 
     public String extractUsername(String token) {
 
@@ -43,6 +56,7 @@ public class JwtService {
                 .getPayload()
                 .getSubject();
     }
+
 
     public boolean isTokenValid(
             String token,
@@ -57,9 +71,10 @@ public class JwtService {
         ) && !isTokenExpired(token);
     }
 
+
     private boolean isTokenExpired(String token) {
 
-        Date expiration =
+        Date expirationDate =
                 Jwts.parser()
                         .verifyWith(secretKey)
                         .build()
@@ -67,6 +82,8 @@ public class JwtService {
                         .getPayload()
                         .getExpiration();
 
-        return expiration.before(new Date());
+        return expirationDate.before(
+                new Date()
+        );
     }
 }
