@@ -100,16 +100,16 @@ React Dashboard
 - [x] Multi-device monitoring improvements
 - [x] Automatic offline detection
 - [x] Dashboard refinements
+- [x] WebSocket real-time updates
+- [x] JWT authentication
 
 ### In Progress
 
-- [x] JWT authentication
 
 
 ### Planned
 
 - [ ] Role-based access
-- [ ] WebSocket real-time updates
 - [ ] Alert and notification system
 - [ ] Docker Compose deployment
 - [ ] Deployment guide
