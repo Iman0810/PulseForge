@@ -104,7 +104,7 @@ React Dashboard
 - [x] JWT authentication
 
 ### In Progress
-
+- [x] Security enhancements
 
 
 ### Planned
