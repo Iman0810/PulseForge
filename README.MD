@@ -1,6 +1,6 @@
 # PulseForge ⚡
 
-> 🚧 **Project Status:** Active Development
+> 🚧 **Project Status:** Temporarily on hold
 
 PulseForge is a lightweight, self-hosted system monitoring platform currently being developed using **Go**, **Spring Boot**, **React**, and **PostgreSQL**.
 
